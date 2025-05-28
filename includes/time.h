@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:26:40 by igngonza          #+#    #+#             */
-/*   Updated: 2025/05/22 12:42:46 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:19:07 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # include <stddef.h>
 # include <sys/time.h>
 
-size_t	get_timestamp_ms(void);
+size_t	get_current_time(void);
 
 #endif

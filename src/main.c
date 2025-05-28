@@ -6,32 +6,34 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:52:08 by igngonza          #+#    #+#             */
-/*   Updated: 2025/05/22 12:26:04 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:05:42 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/parse_args.h"
 #include "../includes/philo.h"
+
+static int	case_one(t_program *program)
+{
+}
 
 int	main(int argc, char **argv)
 {
-	int			number_of_philosophers;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			number_of_times_each_philosopher_must_eat;
 	t_program	program;
-	size_t		start_time;
 
-	if (!parse_arguments(argc, argv, &number_of_philosophers, &time_to_die,
-			&time_to_eat, &time_to_sleep,
-			&number_of_times_each_philosopher_must_eat))
+	if (argc < 5 || argc > 6)
+	{
+		printf("Error: number_of_philosophers time_to_die time_to_eat time_to_sleep[number_of_times_must_eat]\n ");
 		return (1);
-	start_time = get_timestamp_ms();
-	printf("Simulation start time: %zu ms\n", start_time);
-	program.dead_flag = 0;
-	pthread_mutex_init(&program.dead_lock, NULL);
-	pthread_mutex_init(&program.meal_lock, NULL);
-	pthread_mutex_init(&program.write_lock, NULL);
-	printf("All arguments valid.\n");
+	}
+	if (input_checker(argc, argv))
+		return (1);
+	if (init(&program, argv, argc))
+		return (1);
+	if (program.num_of_philos == 1)
+		return (case_one(&program));
+	// if (thread_init(&data))
+	//	return (1);
+	// ft_exit(&data);
 	return (0);
 }

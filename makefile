@@ -6,7 +6,7 @@
 #    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/22 11:32:21 by igngonza          #+#    #+#              #
-#    Updated: 2025/05/22 12:41:42 by igngonza         ###   ########.fr        #
+#    Updated: 2025/05/26 12:10:02 by igngonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -pthread -I./src/include
 
 SRC_MAIN = src/main.c
-SRC_PARSE = src/utils/parse_args.c
-SRC_TIME = src/utils/time_utils.c
-
+SRC_UTILS = $(wildcard src/utils/*.c)
 OBJ_MAIN = $(OBJ_DIR)/main.o
-OBJ_PARSE = $(OBJ_UTILS_DIR)/parse_args.o
-OBJ_TIME = $(OBJ_UTILS_DIR)/time_utils.o
-OBJ = $(OBJ_MAIN) $(OBJ_PARSE) $(OBJ_TIME)
+OBJ_UTILS = $(patsubst src/utils/%.c,$(OBJ_UTILS_DIR)/%.o,$(SRC_UTILS))
+OBJ = $(OBJ_MAIN) $(OBJ_UTILS)
 
 TARGET = philo
 
@@ -35,10 +32,7 @@ $(TARGET): $(OBJ)
 $(OBJ_MAIN): $(SRC_MAIN)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_PARSE): $(SRC_PARSE)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_TIME): $(SRC_TIME)
+$(OBJ_UTILS): $(OBJ_UTILS_DIR)/%.o: src/utils/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
