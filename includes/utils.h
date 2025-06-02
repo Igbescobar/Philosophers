@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.h                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 12:26:40 by igngonza          #+#    #+#             */
-/*   Updated: 2025/05/22 15:19:07 by igngonza         ###   ########.fr       */
+/*   Created: 2025/05/29 11:32:12 by igngonza          #+#    #+#             */
+/*   Updated: 2025/05/29 21:07:14 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-#ifndef TIME_UTILS_H
-# define TIME_UTILS_H
-
+# include "philo.h"
 # include <stddef.h>
 # include <sys/time.h>
+# include <unistd.h>
 
+# define THEAD_ERR "ERROR WHILE CREATING THREADS"
+# define JOIN_ERR "ERROR WHEN JOINING THREADS"
+
+void	state_change_printer(t_philo *philo, size_t timestamp, int action);
+int		ft_atoi(const char *str);
 size_t	get_current_time(void);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_usleep(size_t milliseconds);
+int		error(char *str, t_program *program);
+void	print_message(char *str, t_philo *philo);
 
 #endif

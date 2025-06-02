@@ -6,11 +6,12 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:12:38 by igngonza          #+#    #+#             */
-/*   Updated: 2025/05/26 11:58:37 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:57:39 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo.h"
+#include "../../includes/utils.h"
 
 static int	is_positive_integer(const char *str)
 {
