@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:32:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/05/29 21:07:14 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:11:03 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ size_t	get_current_time(void);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_usleep(size_t milliseconds);
 int		error(char *str, t_program *program);
-void	print_message(char *str, t_philo *philo);
 
 #endif

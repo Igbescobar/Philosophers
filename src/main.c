@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:52:08 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/02 10:35:26 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:04:43 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ static int	case_one(t_program *program)
 	t_philo	philo;
 
 	philo = program->philos[0];
-	program->start_time = get_current_time();
-	if (pthread_create(&philo.thread, NULL, &routine, &philo))
-		// return (error(THEAD_ERR, program));
-		pthread_join(philo.thread, NULL);
+	pthread_mutex_lock(philo.r_fork);
+	state_change_printer(&philo, get_current_time(), 1);
+	ft_usleep(program->time_to_die);
+	state_change_printer(&philo, get_current_time(), 5);
+	pthread_mutex_unlock(philo.r_fork);
 	return (0);
 }
 
@@ -42,12 +43,16 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	if (program.num_of_philos == 1)
-		return (case_one(&program));
+	{
+		case_one(&program);
+		free_resources(&program);
+		return (0);
+	}
 	if (threads_loop(&program) != 0)
 	{
 		printf("Error: Thread loop failed\n");
 		return (1);
 	}
-	// Free resources
+	free_resources(&program);
 	return (0);
 }

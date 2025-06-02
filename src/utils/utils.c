@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:57:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/05/29 20:03:12 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:04:56 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,31 @@ size_t	get_current_time(void)
 
 int	ft_usleep(size_t milliseconds)
 {
-	size_t start;
+	size_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < milliseconds)
 		usleep(500);
 	return (0);
+}
+
+void	free_resources(t_program *program)
+{
+	int	i;
+
+	if (program->philos)
+		free(program->philos);
+	if (program->forks)
+	{
+		i = 0;
+		while (i < program->num_of_philos)
+		{
+			pthread_mutex_destroy(&program->forks[i]);
+			i++;
+		}
+		free(program->forks);
+	}
+	pthread_mutex_destroy(&program->dead_lock);
+	pthread_mutex_destroy(&program->meal_lock);
+	pthread_mutex_destroy(&program->write_lock);
 }

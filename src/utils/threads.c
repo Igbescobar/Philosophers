@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:48:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/02 11:09:18 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:05:04 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	*routine(void *philo_pointer)
 		state_change_printer(philo, get_current_time(), 4);
 	}
 	pthread_mutex_lock(&philo->program->dead_lock);
-	philo->dead = 1;
 	pthread_mutex_unlock(&philo->program->dead_lock);
 	pthread_join(supervisor_thread, NULL);
 	return (NULL);
@@ -98,7 +97,6 @@ int	threads_loop(t_program *program)
 	int	i;
 	int	ret;
 
-	program->start_time = get_current_time();
 	i = 0;
 	while (i < program->num_of_philos)
 	{

@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:21:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/05/29 20:02:39 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:01:30 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	init_mallocs(t_program *program)
 		program->philos[i].write_lock = &program->write_lock;
 		program->philos[i].dead_lock = &program->dead_lock;
 		program->philos[i].meal_lock = &program->meal_lock;
-		program->philos[i].dead = program->dead_flag;
 		i++;
 	}
 	return (1);
@@ -79,13 +78,10 @@ static int	init_philos(t_program *program)
 	while (i < program->num_of_philos)
 	{
 		program->philos[i].id = i + 1;
-		program->philos[i].eating = 0;
 		program->philos[i].meals_eaten = 0;
 		program->philos[i].last_meal_time = 0;
-		program->philos[i].time_to_die = program->time_to_die;
 		program->philos[i].time_to_eat = program->time_to_eat;
 		program->philos[i].time_to_sleep = program->time_to_sleep;
-		program->philos[i].num_of_philos = program->num_of_philos;
 		program->philos[i].num_times_to_eat = program->num_times_to_eat;
 		program->philos[i].r_fork = &program->forks[i];
 		program->philos[i].l_fork = &program->forks[(i + 1)
