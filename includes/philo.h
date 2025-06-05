@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:00:14 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 10:15:03 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:05:27 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,7 @@ int							threads_loop(t_program *program);
 void						eating_process(t_philo *philo);
 int							philo_is_dead(t_philo *philo);
 void						free_resources(t_program *program);
+void						philosopher_lifecycle(t_philo *philo);
+void						mark_dead_flag(t_philo *philo);
+int							philo_get_meals(t_philo *philo);
 #endif

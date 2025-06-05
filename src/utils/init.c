@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:21:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/02 20:01:30 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:56:09 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,15 @@ static int	init_mallocs(t_program *program)
 	i = 0;
 	program->philos = malloc(sizeof(t_philo) * program->num_of_philos);
 	if (!program->philos)
-	{
-		printf("Error: Failed to allocate memory for philos\n");
-		return (0);
-	}
+		return (printf("Error: Failed to allocate memory for philos\n"), 0);
 	program->forks = malloc(sizeof(pthread_mutex_t) * program->num_of_philos);
 	if (!program->forks)
-	{
-		printf("Error: Failed to allocate memory for forks\n");
-		free(program->philos);
-		return (0);
-	}
+		return (printf("Error: Failed to allocate memory for forks\n"),
+			free(program->philos), 0);
 	while (i < program->num_of_philos)
 	{
 		if (pthread_mutex_init(&program->forks[i], NULL) != 0)
-		{
-			free(program->philos);
-			free(program->forks);
-			return (0);
-		}
+			return (free(program->philos), free(program->forks), 0);
 		program->philos[i].r_fork = &program->forks[i];
 		program->philos[i].l_fork = &program->forks[(i + 1)
 			% program->num_of_philos];

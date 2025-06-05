@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:48:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 10:38:44 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:07:39 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ int	philo_is_dead(t_philo *philo)
 	dead = philo->program->dead_flag;
 	pthread_mutex_unlock(&philo->program->dead_lock);
 	return (dead);
-}
-
-static int	philo_get_meals(t_philo *philo)
-{
-	int	meals;
-
-	pthread_mutex_lock(philo->meal_lock);
-	meals = philo->meals_eaten;
-	pthread_mutex_unlock(philo->meal_lock);
-	return (meals);
 }
 
 void	*supervisor(void *philo_pointer)
@@ -64,35 +54,18 @@ void	*routine(void *philo_pointer)
 {
 	t_philo		*philo;
 	pthread_t	supervisor_thread;
-	int			max_eats;
 	size_t		now_ms;
 
 	philo = (t_philo *)philo_pointer;
-	max_eats = philo->program->num_times_to_eat;
-	now_ms = get_current_time();
-	philo->last_meal_time = now_ms - philo->program->start_time;
+	now_ms = get_current_time() - philo->program->start_time;
+	philo->last_meal_time = now_ms;
 	if (pthread_create(&supervisor_thread, NULL, supervisor, philo) != 0)
 	{
 		now_ms = get_current_time() - philo->program->start_time;
-		state_change_printer(philo, now_ms, 5);
-		return (NULL);
+		return (state_change_printer(philo, now_ms, 5), NULL);
 	}
-	while (!philo_is_dead(philo) && (max_eats < 0
-			|| philo_get_meals(philo) < max_eats))
-	{
-		eating_process(philo);
-		if (philo_is_dead(philo))
-			break ;
-		now_ms = get_current_time() - philo->program->start_time;
-		state_change_printer(philo, now_ms, 4);
-		ft_usleep(philo->time_to_sleep);
-		if (philo_is_dead(philo))
-			break ;
-		now_ms = get_current_time() - philo->program->start_time;
-		state_change_printer(philo, now_ms, 3);
-	}
-	pthread_mutex_lock(&philo->program->dead_lock);
-	pthread_mutex_unlock(&philo->program->dead_lock);
+	philosopher_lifecycle(philo);
+	mark_dead_flag(philo);
 	pthread_join(supervisor_thread, NULL);
 	return (NULL);
 }

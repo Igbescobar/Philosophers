@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:52:08 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 10:20:32 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:30 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,11 @@ int	main(int argc, char **argv)
 
 	program.start_time = get_current_time();
 	if (argc < 5 || argc > 6)
-	{
-		printf("Error: number_of_philosophers time_to_die time_to_eat time_to_sleep[number_of_times_must_eat]\n");
-		return (1);
-	}
+		return (printf("Error: number of arguments incorrect\n"), 1);
 	if (!input_checker(argc, argv))
 		return (1);
 	if (!init(&program, argv, argc))
-	{
-		printf("Error: Initialization failed\n");
-		return (1);
-	}
+		return (printf("Error: Initialization failed\n"), 1);
 	if (program.num_of_philos == 1)
 	{
 		case_one(&program);
@@ -53,10 +47,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	if (threads_loop(&program) != 0)
-	{
-		printf("Error: Thread loop failed\n");
-		return (1);
-	}
+		return (printf("Error: Thread loop failed\n"), 1);
 	free_resources(&program);
 	return (0);
 }
