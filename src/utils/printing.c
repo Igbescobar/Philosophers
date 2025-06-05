@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 12:49:37 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/02 20:06:55 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:47:18 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	state_change_printer(t_philo *philo, size_t timestamp, int action)
 	if (action == 2)
 		printf("%zu %d is eating\n", timestamp, philo->id);
 	if (action == 3)
-		printf("%zu %d is sleeping\n", timestamp, philo->id);
-	if (action == 4)
 		printf("%zu %d is thinking\n", timestamp, philo->id);
+	if (action == 4)
+		printf("%zu %d is sleeping\n", timestamp, philo->id);
 	if (action == 5)
 		printf("%zu %d died\n", timestamp, philo->id);
 	pthread_mutex_unlock(&philo->program->write_lock);

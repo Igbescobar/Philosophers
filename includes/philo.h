@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:00:14 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/02 20:04:34 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:15:03 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_program
 	size_t					time_to_die;
 	size_t					time_to_eat;
 	size_t					time_to_sleep;
+	size_t					start_time;
 	int						num_times_to_eat;
 	int						dead_flag;
 	pthread_mutex_t			dead_lock;

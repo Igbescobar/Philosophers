@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:48:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/02 20:05:04 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:38:44 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,21 @@ void	*supervisor(void *philo_pointer)
 {
 	t_philo	*philo;
 	int		max_eats;
+	size_t	now_ms;
 
 	philo = (t_philo *)philo_pointer;
 	max_eats = philo->program->num_times_to_eat;
 	while (!philo_is_dead(philo) && (max_eats < 0
 			|| philo_get_meals(philo) < max_eats))
 	{
+		now_ms = get_current_time() - philo->program->start_time;
 		pthread_mutex_lock(&philo->program->dead_lock);
-		if (get_current_time()
-			- philo->last_meal_time > philo->program->time_to_die)
+		if (now_ms - philo->last_meal_time > philo->program->time_to_die)
 		{
 			philo->program->dead_flag = 1;
 			pthread_mutex_unlock(&philo->program->dead_lock);
-			state_change_printer(philo, get_current_time(), 5);
+			now_ms = get_current_time() - philo->program->start_time;
+			state_change_printer(philo, now_ms, 5);
 			break ;
 		}
 		pthread_mutex_unlock(&philo->program->dead_lock);
@@ -63,15 +65,16 @@ void	*routine(void *philo_pointer)
 	t_philo		*philo;
 	pthread_t	supervisor_thread;
 	int			max_eats;
+	size_t		now_ms;
 
 	philo = (t_philo *)philo_pointer;
 	max_eats = philo->program->num_times_to_eat;
-	if (philo->id % 2 == 0)
-		ft_usleep(philo->time_to_eat / 2);
-	philo->last_meal_time = get_current_time();
+	now_ms = get_current_time();
+	philo->last_meal_time = now_ms - philo->program->start_time;
 	if (pthread_create(&supervisor_thread, NULL, supervisor, philo) != 0)
 	{
-		state_change_printer(philo, get_current_time(), 5);
+		now_ms = get_current_time() - philo->program->start_time;
+		state_change_printer(philo, now_ms, 5);
 		return (NULL);
 	}
 	while (!philo_is_dead(philo) && (max_eats < 0
@@ -80,11 +83,13 @@ void	*routine(void *philo_pointer)
 		eating_process(philo);
 		if (philo_is_dead(philo))
 			break ;
-		state_change_printer(philo, get_current_time(), 4);
+		now_ms = get_current_time() - philo->program->start_time;
+		state_change_printer(philo, now_ms, 4);
 		ft_usleep(philo->time_to_sleep);
 		if (philo_is_dead(philo))
 			break ;
-		state_change_printer(philo, get_current_time(), 4);
+		now_ms = get_current_time() - philo->program->start_time;
+		state_change_printer(philo, now_ms, 3);
 	}
 	pthread_mutex_lock(&philo->program->dead_lock);
 	pthread_mutex_unlock(&philo->program->dead_lock);
