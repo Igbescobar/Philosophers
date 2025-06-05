@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:48:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 11:07:39 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:13:04 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	*supervisor(void *philo_pointer)
 			philo->program->dead_flag = 1;
 			pthread_mutex_unlock(&philo->program->dead_lock);
 			now_ms = get_current_time() - philo->program->start_time;
-			state_change_printer(philo, now_ms, 5);
+			state_change_printer(philo, now_ms, ACTION_DIED);
 			break ;
 		}
 		pthread_mutex_unlock(&philo->program->dead_lock);
@@ -57,15 +57,16 @@ void	*routine(void *philo_pointer)
 	size_t		now_ms;
 
 	philo = (t_philo *)philo_pointer;
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->time_to_eat);
 	now_ms = get_current_time() - philo->program->start_time;
 	philo->last_meal_time = now_ms;
 	if (pthread_create(&supervisor_thread, NULL, supervisor, philo) != 0)
 	{
 		now_ms = get_current_time() - philo->program->start_time;
-		return (state_change_printer(philo, now_ms, 5), NULL);
+		return (state_change_printer(philo, now_ms, ACTION_DIED), NULL);
 	}
 	philosopher_lifecycle(philo);
-	mark_dead_flag(philo);
 	pthread_join(supervisor_thread, NULL);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 10:52:08 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 10:52:30 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:10:48 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static int	case_one(t_program *program)
 	philo = program->philos[0];
 	pthread_mutex_lock(philo.r_fork);
 	now_ms = get_current_time() - program->start_time;
-	state_change_printer(&philo, now_ms, 1);
+	state_change_printer(&philo, now_ms, ACTION_TAKE_FORK);
 	ft_usleep(program->time_to_die);
 	now_ms = get_current_time() - program->start_time;
-	state_change_printer(&philo, now_ms, 5);
+	state_change_printer(&philo, now_ms, ACTION_DIED);
 	pthread_mutex_unlock(philo.r_fork);
 	return (0);
 }

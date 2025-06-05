@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:00:14 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 11:05:27 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:10:31 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+# define ACTION_TAKE_FORK "has taken a fork"
+# define ACTION_EATING "is eating"
+# define ACTION_THINKING "is thinking"
+# define ACTION_SLEEPING "is sleeping"
+# define ACTION_DIED "died"
 
 typedef struct s_program	t_program;
 
