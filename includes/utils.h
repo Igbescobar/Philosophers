@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:32:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 13:11:39 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:29:41 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define THEAD_ERR "ERROR WHILE CREATING THREADS"
 # define JOIN_ERR "ERROR WHEN JOINING THREADS"
+
 void	state_change_printer(t_philo *philo, size_t timestamp,
 			const char *action);
 int		ft_atoi(const char *str);
