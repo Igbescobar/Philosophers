@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:00:14 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 13:10:31 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:47:58 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ void						free_resources(t_program *program);
 void						philosopher_lifecycle(t_philo *philo);
 void						mark_dead_flag(t_philo *philo);
 int							philo_get_meals(t_philo *philo);
+void						leave_forks(t_philo *p);
 #endif

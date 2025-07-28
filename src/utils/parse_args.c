@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:12:38 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 10:54:37 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/28 12:14:53 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	is_positive_integer(const char *str)
 		if (str[i] < '0' || str[i] > '9')
 			return (0);
 		result = result * 10 + (str[i] - '0');
-		if (result > SIZE_MAX)
+		if (result > INT_MAX)
 			return (0);
 		i++;
 	}

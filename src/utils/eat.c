@@ -6,12 +6,18 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 12:25:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 14:04:49 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/28 12:58:42 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo.h"
 #include "../../includes/utils.h"
+
+void	leave_forks(t_philo *p)
+{
+	pthread_mutex_unlock(p->r_fork);
+	pthread_mutex_unlock(p->l_fork);
+}
 
 static int	take_forks_even(t_philo *p)
 {
@@ -69,12 +75,6 @@ static int	take_forks(t_philo *p)
 		return (take_forks_even(p));
 	else
 		return (take_forks_odd(p));
-}
-
-static void	leave_forks(t_philo *p)
-{
-	pthread_mutex_unlock(p->r_fork);
-	pthread_mutex_unlock(p->l_fork);
 }
 
 void	eating_process(t_philo *philo)

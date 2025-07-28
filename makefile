@@ -6,7 +6,7 @@
 #    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/22 11:32:21 by igngonza          #+#    #+#              #
-#    Updated: 2025/05/26 12:10:02 by igngonza         ###   ########.fr        #
+#    Updated: 2025/07/24 11:40:09 by igngonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,14 @@ OBJ_UTILS_DIR = $(OBJ_DIR)/utils
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -pthread -I./src/include
+
+ifeq ($(SAN),tsan)
+	CFLAGS += -fsanitize=thread -g
+endif
+
+ifeq ($(SAN),asan)
+	CFLAGS += -fsanitize=address -g
+endif
 
 SRC_MAIN = src/main.c
 SRC_UTILS = $(wildcard src/utils/*.c)
