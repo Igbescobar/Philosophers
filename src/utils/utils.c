@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:57:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 10:57:32 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:23:45 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	while (*s1 != '\0' && (*s1 == *s2))
-	{
-		s1++;
-		s2++;
-	}
-	return (*(char *)s1 - *(char *)s2);
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (-1);
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }
 
 size_t	get_current_time(void)
@@ -57,7 +59,7 @@ size_t	get_current_time(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return ((size_t)(tv.tv_sec * 1000UL + tv.tv_usec / 1000UL));
+	return ((size_t)tv.tv_sec * 1000 + (size_t)(tv.tv_usec / 1000));
 }
 
 int	ft_usleep(size_t milliseconds)
@@ -66,7 +68,7 @@ int	ft_usleep(size_t milliseconds)
 
 	start = get_current_time();
 	while ((get_current_time() - start) < milliseconds)
-		usleep(500);
+		usleep(100 + (milliseconds / 10));
 	return (0);
 }
 

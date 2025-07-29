@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:00:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/07/28 14:22:04 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:23:57 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ void	philosopher_lifecycle(t_philo *philo)
 		eating_process(philo);
 		if (philo_is_dead(philo))
 			break ;
-		now_rel = get_current_time() - philo->program->start_time;
-		state_change_printer(philo, now_rel, ACTION_SLEEPING);
+		if (!philo_is_dead(philo))
+		{
+			now_rel = get_current_time() - philo->program->start_time;
+			state_change_printer(philo, now_rel, ACTION_SLEEPING);
+		}
 		ft_usleep(philo->time_to_sleep);
 		if (philo_is_dead(philo))
 			break ;
-		now_rel = get_current_time() - philo->program->start_time;
-		state_change_printer(philo, now_rel, ACTION_THINKING);
+		if (!philo_is_dead(philo))
+		{
+			now_rel = get_current_time() - philo->program->start_time;
+			state_change_printer(philo, now_rel, ACTION_THINKING);
+		}
 	}
 }
 

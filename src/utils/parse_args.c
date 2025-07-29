@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:12:38 by igngonza          #+#    #+#             */
-/*   Updated: 2025/07/28 12:14:53 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:00:07 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	is_positive_integer(const char *str)
 			return (0);
 		i++;
 	}
-	return (1);
+	return (result > 0);
 }
 
 int	input_checker(int argc, char **argv)

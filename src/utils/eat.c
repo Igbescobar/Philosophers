@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 12:25:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/07/28 12:58:42 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:26:14 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 void	leave_forks(t_philo *p)
 {
+	if (p->program->num_of_philos == 1)
+	{
+		pthread_mutex_unlock(p->l_fork);
+		return ;
+	}
 	pthread_mutex_unlock(p->r_fork);
 	pthread_mutex_unlock(p->l_fork);
 }
@@ -47,6 +52,13 @@ static int	take_forks_odd(t_philo *p)
 {
 	size_t	now_ms;
 
+	if (p->program->num_of_philos == 1)
+	{
+		pthread_mutex_lock(p->l_fork);
+		now_ms = get_current_time() - p->program->start_time;
+		state_change_printer(p, now_ms, ACTION_TAKE_FORK);
+		return (0);
+	}
 	pthread_mutex_lock(p->l_fork);
 	if (philo_is_dead(p))
 	{
@@ -84,12 +96,27 @@ void	eating_process(t_philo *philo)
 	if (philo_is_dead(philo))
 		return ;
 	if (!take_forks(philo))
+	{
+		if (philo->program->num_of_philos == 1)
+		{
+			while (!philo_is_dead(philo))
+				usleep(1000);
+			leave_forks(philo);
+		}
 		return ;
+	}
+	if (philo_is_dead(philo))
+	{
+		leave_forks(philo);
+		return ;
+	}
 	now_ms = get_current_time() - philo->program->start_time;
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal_time = now_ms;
+	pthread_mutex_unlock(philo->meal_lock);
 	state_change_printer(philo, now_ms, ACTION_EATING);
 	ft_usleep(philo->time_to_eat);
 	pthread_mutex_lock(philo->meal_lock);
-	philo->last_meal_time = get_current_time() - philo->program->start_time;
 	philo->meals_eaten++;
 	pthread_mutex_unlock(philo->meal_lock);
 	leave_forks(philo);

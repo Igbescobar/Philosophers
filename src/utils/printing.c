@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 12:49:37 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 13:10:45 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:28:42 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	state_change_printer(t_philo *philo, size_t timestamp,
 		const char *action)
 {
 	pthread_mutex_lock(&philo->program->write_lock);
-	printf("%zu %d %s\n", timestamp, philo->id, action);
+	if (!philo_is_dead(philo) || ft_strcmp(action, ACTION_DIED) == 0)
+	{
+		printf("%zu %d %s\n", timestamp, philo->id, action);
+	}
 	pthread_mutex_unlock(&philo->program->write_lock);
 }
 

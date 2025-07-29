@@ -6,14 +6,14 @@
 #    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/22 11:32:21 by igngonza          #+#    #+#              #
-#    Updated: 2025/07/24 11:40:09 by igngonza         ###   ########.fr        #
+#    Updated: 2025/07/29 15:08:14 by igngonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 OBJ_DIR = obj
 OBJ_UTILS_DIR = $(OBJ_DIR)/utils
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread -I./src/include
 
 ifeq ($(SAN),tsan)

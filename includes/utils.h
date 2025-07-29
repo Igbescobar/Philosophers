@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:32:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/06/05 14:29:41 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:29:15 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	state_change_printer(t_philo *philo, size_t timestamp,
 			const char *action);
 int		ft_atoi(const char *str);
 size_t	get_current_time(void);
-int		ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 int		ft_usleep(size_t milliseconds);
 int		error(char *str, t_program *program);
 
