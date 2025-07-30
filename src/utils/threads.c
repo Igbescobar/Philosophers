@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 11:48:12 by igngonza          #+#    #+#             */
-/*   Updated: 2025/07/30 11:41:10 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:39:39 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,6 @@ void	*routine(void *philo_pointer)
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->time_to_eat / 2);
 	now_ms = get_current_time() - philo->program->start_time;
-	pthread_mutex_lock(philo->meal_lock);
-	philo->last_meal_time = now_ms;
-	pthread_mutex_unlock(philo->meal_lock);
 	philosopher_lifecycle(philo);
 	return (NULL);
 }

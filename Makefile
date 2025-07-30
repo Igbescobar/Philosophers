@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
+#    By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/22 11:32:21 by igngonza          #+#    #+#              #
-#    Updated: 2025/07/29 15:08:14 by igngonza         ###   ########.fr        #
+#    Updated: 2025/07/30 15:41:20 by igngonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,7 @@ OBJ_DIR = obj
 OBJ_UTILS_DIR = $(OBJ_DIR)/utils
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -I./src/include
-
-ifeq ($(SAN),tsan)
-	CFLAGS += -fsanitize=thread -g
-endif
-
-ifeq ($(SAN),asan)
-	CFLAGS += -fsanitize=address -g
-endif
+CFLAGS = -Wall -Wextra -Werror -I./src/include
 
 SRC_MAIN = src/main.c
 SRC_UTILS = $(wildcard src/utils/*.c)
