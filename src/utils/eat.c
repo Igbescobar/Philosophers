@@ -6,23 +6,12 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 12:25:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/07/29 16:26:14 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/30 11:11:25 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo.h"
 #include "../../includes/utils.h"
-
-void	leave_forks(t_philo *p)
-{
-	if (p->program->num_of_philos == 1)
-	{
-		pthread_mutex_unlock(p->l_fork);
-		return ;
-	}
-	pthread_mutex_unlock(p->r_fork);
-	pthread_mutex_unlock(p->l_fork);
-}
 
 static int	take_forks_even(t_philo *p)
 {
@@ -61,19 +50,13 @@ static int	take_forks_odd(t_philo *p)
 	}
 	pthread_mutex_lock(p->l_fork);
 	if (philo_is_dead(p))
-	{
-		pthread_mutex_unlock(p->l_fork);
-		return (0);
-	}
+		return (pthread_mutex_unlock(p->l_fork), 0);
 	now_ms = get_current_time() - p->program->start_time;
 	state_change_printer(p, now_ms, ACTION_TAKE_FORK);
 	pthread_mutex_lock(p->r_fork);
 	if (philo_is_dead(p))
-	{
-		pthread_mutex_unlock(p->r_fork);
-		pthread_mutex_unlock(p->l_fork);
-		return (0);
-	}
+		return (pthread_mutex_unlock(p->r_fork),
+			pthread_mutex_unlock(p->l_fork), 0);
 	now_ms = get_current_time() - p->program->start_time;
 	state_change_printer(p, now_ms, ACTION_TAKE_FORK);
 	return (1);
@@ -87,6 +70,18 @@ static int	take_forks(t_philo *p)
 		return (take_forks_even(p));
 	else
 		return (take_forks_odd(p));
+}
+
+static void	update_meal_data(t_philo *philo, size_t now_ms)
+{
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal_time = now_ms;
+	pthread_mutex_unlock(philo->meal_lock);
+	state_change_printer(philo, now_ms, ACTION_EATING);
+	ft_usleep(philo->time_to_eat);
+	pthread_mutex_lock(philo->meal_lock);
+	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->meal_lock);
 }
 
 void	eating_process(t_philo *philo)
@@ -106,18 +101,8 @@ void	eating_process(t_philo *philo)
 		return ;
 	}
 	if (philo_is_dead(philo))
-	{
-		leave_forks(philo);
-		return ;
-	}
+		return (leave_forks(philo));
 	now_ms = get_current_time() - philo->program->start_time;
-	pthread_mutex_lock(philo->meal_lock);
-	philo->last_meal_time = now_ms;
-	pthread_mutex_unlock(philo->meal_lock);
-	state_change_printer(philo, now_ms, ACTION_EATING);
-	ft_usleep(philo->time_to_eat);
-	pthread_mutex_lock(philo->meal_lock);
-	philo->meals_eaten++;
-	pthread_mutex_unlock(philo->meal_lock);
+	update_meal_data(philo, now_ms);
 	leave_forks(philo);
 }

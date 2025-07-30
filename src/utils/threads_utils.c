@@ -6,12 +6,22 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:00:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/07/29 16:23:57 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/07/30 10:56:21 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo.h"
 #include "../../includes/utils.h"
+
+int	philo_is_dead(t_philo *philo)
+{
+	int	dead;
+
+	pthread_mutex_lock(&philo->program->dead_lock);
+	dead = philo->program->dead_flag;
+	pthread_mutex_unlock(&philo->program->dead_lock);
+	return (dead);
+}
 
 int	philo_get_meals(t_philo *philo)
 {
