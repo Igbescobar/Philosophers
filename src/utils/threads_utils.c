@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 11:00:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/07/30 10:56:21 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/02 21:08:37 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,44 @@ int	philo_get_meals(t_philo *philo)
 	return (meals);
 }
 
+void	mark_dead_flag(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->program->dead_lock);
+	if (!philo->program->dead_flag)
+		philo->program->dead_flag = 1;
+	pthread_mutex_unlock(&philo->program->dead_lock);
+}
+
 void	philosopher_lifecycle(t_philo *philo)
 {
 	int		max_eats;
 	size_t	now_rel;
 
 	max_eats = philo->program->num_times_to_eat;
-	while (!philo_is_dead(philo) && (max_eats < 0
-			|| philo_get_meals(philo) < max_eats))
+	while (!philo_is_dead(philo))
 	{
+		now_rel = get_current_time() - philo->program->start_time;
+		pthread_mutex_lock(philo->meal_lock);
+		if ((now_rel - philo->last_meal_time > philo->program->time_to_die))
+		{
+			pthread_mutex_unlock(philo->meal_lock);
+			mark_dead_flag(philo);
+			state_change_printer(philo, now_rel - philo->program->start_time,
+				ACTION_DIED);
+			break ;
+		}
+		pthread_mutex_unlock(philo->meal_lock);
+		if (max_eats >= 0 && philo_get_meals(philo) >= max_eats)
+			break ;
 		eating_process(philo);
 		if (philo_is_dead(philo))
 			break ;
-		if (!philo_is_dead(philo))
-		{
-			now_rel = get_current_time() - philo->program->start_time;
-			state_change_printer(philo, now_rel, ACTION_SLEEPING);
-		}
+		now_rel = get_current_time() - philo->program->start_time;
+		state_change_printer(philo, now_rel, ACTION_SLEEPING);
 		ft_usleep(philo->time_to_sleep);
 		if (philo_is_dead(philo))
 			break ;
-		if (!philo_is_dead(philo))
-		{
-			now_rel = get_current_time() - philo->program->start_time;
-			state_change_printer(philo, now_rel, ACTION_THINKING);
-		}
+		now_rel = get_current_time() - philo->program->start_time;
+		state_change_printer(philo, now_rel, ACTION_THINKING);
 	}
-}
-
-void	mark_dead_flag(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->program->dead_lock);
-	philo->program->dead_flag = 1;
-	pthread_mutex_unlock(&philo->program->dead_lock);
 }
