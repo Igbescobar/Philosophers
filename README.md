@@ -94,10 +94,3 @@ flowchart LR
 For a line-by-line walkthrough of the entry point, see **[Program Entry Point & Lifecycle](/Igbescobar/Philosophers/1.2-program-entry-point-and-lifecycle)**.
 
 **Sources:**[src/main.c16-31](https://github.com/Igbescobar/Philosophers/blob/a53c8c75/src/main.c#L16-L31)
-
----
-
-## Detailed Documentation Links
-
-- **[Getting Started: Build & Usage](/Igbescobar/Philosophers/1.1-getting-started:-build-and-usage)**: Detailed instructions on compilation, valid input ranges (e.g., the 200-philosopher cap), and how to interpret simulation output.
-- **[Program Entry Point & Lifecycle](/Igbescobar/Philosophers/1.2-program-entry-point-and-lifecycle)**: A technical deep dive into `main.c`, covering the sequence from argument parsing to the final `free_resources` call.
